@@ -34,8 +34,8 @@ const Home: NextPage = () => {
 					Get started by editing <code className={styles.code}>pages/index.tsx</code>
 				</p>
 
-				<Link href="/about">
-					<a>Goto About</a>
+				<Link href="/posts">
+					<a>Goto Posts</a>
 				</Link>
 
 				<button onClick={gotoDetailPage}>Go to post Detail page</button>
