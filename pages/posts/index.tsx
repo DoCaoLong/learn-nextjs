@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPropsContext } from 'next'
+import Link from 'next/link'
 import * as React from 'react'
 
 export interface IPostListPageProps {
@@ -13,7 +14,9 @@ export default function PostListPage({ posts }: IPostListPageProps) {
 			<h1>Post List Page</h1>
 			<ul>
 				{posts.map((item: any, index: number) => (
-					<li key={index}>{item.title}</li>
+					<li key={index}>
+						<Link href={`/posts/${item.id}`}>{item.title}</Link>
+					</li>
 				))}
 			</ul>
 		</>
