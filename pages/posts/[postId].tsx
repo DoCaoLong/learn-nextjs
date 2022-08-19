@@ -18,7 +18,7 @@ export default function PostDetailPage({ post }: IPostPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	console.log('get statis paths :>> ')
+	// console.log('get statis paths :>> ')
 	const response = await fetch('https://js-post-api.herokuapp.com/api/posts?_page=1')
 	const data = await response.json()
 	return {
@@ -31,7 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<IPostPageProps> = async (
 	context: GetStaticPropsContext
 ) => {
-	console.log('get static props :>> ', context.params?.postId)
+	// console.log('get static props :>> ', context.params?.postId)
 	const postId = context.params?.postId
 	if (!postId) return { notFound: true }
 	const response = await fetch(`https://js-post-api.herokuapp.com/api/posts/${postId}`)

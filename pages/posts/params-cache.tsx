@@ -9,6 +9,7 @@ export interface IParamsCacheProps {
 
 export default function ParamsCache({ query, post }: IParamsCacheProps) {
 	console.log('query', query)
+	console.log('post :>> ', post)
 	const router = useRouter()
 	const [seconds, setSeconds] = React.useState(0)
 
@@ -35,11 +36,13 @@ export default function ParamsCache({ query, post }: IParamsCacheProps) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	context.res.setHeader('Cache-Control', 's-maxage=5')
+	console.log('context', context.query)
 	await new Promise((resolve) => setTimeout(resolve, 3000))
-	const postId = context.query.postId
+	const postId = context.query?.postId
 	if (!postId) return { props: { query: context.query } }
 	const response = await fetch(`https://js-post-api.herokuapp.com/api/posts?_page=${postId}`)
 	const data = await response.json()
+	console.log('data :>> ', data)
 	return {
 		props: {
 			query: context.query,
