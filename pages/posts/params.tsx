@@ -14,3 +14,11 @@ export default function ParamsPage(props: IParamsPageProps) {
 		</div>
 	)
 }
+
+export async function getServerSideProps() {
+	await new Promise((resolve) => setTimeout(resolve, 3000))
+
+	return {
+		props: {},
+	}
+}
