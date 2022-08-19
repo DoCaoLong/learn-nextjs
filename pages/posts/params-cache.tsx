@@ -10,7 +10,7 @@ export interface IParamsCacheProps {
 export default function ParamsCache({ query, post }: IParamsCacheProps) {
 	console.log('query', query)
 	const router = useRouter()
-	const [seconds, setSeconds] = React.useState()
+	const [seconds, setSeconds] = React.useState(0)
 
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
