@@ -11,6 +11,7 @@ export default function ParamsCache({ query, post }: IParamsCacheProps) {
 	console.log('query', query)
 	const router = useRouter()
 	const [seconds, setSeconds] = React.useState()
+
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
 			setSeconds((x: any) => {
@@ -18,6 +19,7 @@ export default function ParamsCache({ query, post }: IParamsCacheProps) {
 				return x + 1
 			})
 		}, 1000)
+		return () => clearInterval(intervalId)
 	}, [])
 	return (
 		<div>
