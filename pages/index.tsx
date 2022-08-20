@@ -46,6 +46,14 @@ const Home: NextPage = () => {
 					<a>Goto Params-cache</a>
 				</Link>
 
+				<Link href="/posts/params-cache-swr?postId=sktwi1cgkkuif36dj">
+					<a>Goto Params-cache-swr</a>
+				</Link>
+
+				<Link href="/posts/params-cache-swr5?postId=sktwi1cgkkuif36dj">
+					<a>Goto Params-cache-swr5</a>
+				</Link>
+
 				{/* <button onClick={gotoDetailPage}>Go to post Detail page</button> */}
 			</main>
 		</div>

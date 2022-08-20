@@ -2,12 +2,12 @@ import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 
-export interface IParamsCacheProps {
+export interface IparamsCacheSwr {
 	query: any
 	post: any
 }
 
-export default function ParamsCache({ query, post }: IParamsCacheProps) {
+export default function ParamsCacheSwr({ query, post }: IparamsCacheSwr) {
 	const router = useRouter()
 	const [seconds, setSeconds] = React.useState(0)
 
@@ -38,7 +38,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 	// 	- user (nhiều user gửi cùng lúc) gửi request (call getServerSideProps() and cache in CDN trong 5s). trong 5s đó Server trả về data đã cache (user gửi lên server trả về trong 5s đó). Sau 5s đó user gửi lại resques -> server lại cache in CDN trong 5s tiếp ...
 	// - nếu thay đổi data trong 5s cache đó thì server trả về vẫn data cũ, sau 5s đó user gửi request lại thì mới cập nhật lại data mới
 
-	context.res.setHeader('Cache-Control', 's-maxage=5')
+	context.res.setHeader('Cache-Control', 's-maxage=5, stale-while-revalidate')
 	await new Promise((res) => setTimeout(res, 3000))
 	const postId = context.query?.postId
 	if (!postId) return { props: { query: context.query } }
