@@ -29,31 +29,26 @@ const Home: NextPage = () => {
 				<h1 className={styles.title}>
 					Welcome to <a href="https://nextjs.org">LongDC!</a>
 				</h1>
-
-				<p className={styles.description}>
-					Get started by editing <code className={styles.code}>pages/index.tsx</code>
-				</p>
-
+				<br />
 				<Link href="/posts">
 					<a>Goto Posts</a>
 				</Link>
-
+				<br />
 				<Link href="/about?page=1">
 					<a>Goto About</a>
 				</Link>
-
+				<br />
 				<Link href="/posts/params-cache?postId=sktwi1cgkkuif36dj">
 					<a>Goto Params-cache</a>
 				</Link>
-
+				<br />
 				<Link href="/posts/params-cache-swr?postId=sktwi1cgkkuif36dj">
 					<a>Goto Params-cache-swr</a>
 				</Link>
-
+				<br />
 				<Link href="/posts/params-cache-swr5?postId=sktwi1cgkkuif36dj">
 					<a>Goto Params-cache-swr5</a>
 				</Link>
-
 				{/* <button onClick={gotoDetailPage}>Go to post Detail page</button> */}
 			</main>
 		</div>

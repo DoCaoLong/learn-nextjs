@@ -23,7 +23,7 @@ export default function ParamsCacheSwr({ query, post }: IparamsCacheSwr) {
 
 	return (
 		<div>
-			<h1>Params Cache</h1>
+			<h1>Params Caches-cache-swr</h1>
 			<p>Time: {seconds}s</p>
 			<h2>Post detail</h2>
 			<p>{post?.title}</p>
