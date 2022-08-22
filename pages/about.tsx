@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { MainLayout } from '@/components/layout'
 // import Header from '@/components/common/header'
 export interface IAboutPageProps {}
 // ssr: false (render phía client k render phía server, Ngược lại thì k dùng là true)
@@ -47,7 +48,7 @@ export default function AboutPage(props: IAboutPageProps) {
 	}, [page])
 
 	return (
-		<div>
+		<>
 			<div>About Page</div>
 			<Header />
 			<ul className="post-list">
@@ -57,9 +58,11 @@ export default function AboutPage(props: IAboutPageProps) {
 			</ul>
 			<button onClick={() => handleBackClick()}>Back Page</button>
 			<button onClick={() => handleNextClick()}>Next Page</button>
-		</div>
+		</>
 	)
 }
+
+AboutPage.Layout = MainLayout
 
 export async function getStaticProps() {
 	console.log('get static props')
