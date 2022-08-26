@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { MainLayout } from '@/components/layout'
+import { AdminLayout, MainLayout } from '@/components/layout'
 // import Header from '@/components/common/header'
 export interface IAboutPageProps {}
 // ssr: false (render phía client k render phía server, Ngược lại thì k dùng là true)
@@ -10,7 +10,6 @@ export default function AboutPage(props: IAboutPageProps) {
 	const [postList, setPostList] = useState([])
 	const router = useRouter()
 	const page = router.query?.page
-	console.log(router.query)
 	const handleNextClick = () => {
 		router.push(
 			{
@@ -62,10 +61,9 @@ export default function AboutPage(props: IAboutPageProps) {
 	)
 }
 
-AboutPage.Layout = MainLayout
+AboutPage.Layout = AdminLayout
 
 export async function getStaticProps() {
-	console.log('get static props')
 	return {
 		props: {},
 	}

@@ -3,11 +3,6 @@ import Link from 'next/link'
 import * as React from 'react'
 
 export function MainLayout({ children }: LayoutProps) {
-	// React.useEffect(() => {
-	// 	console.log('MainLayout mounnting	>> ')
-	// 	return () => console.log('MainLayout UnMounnting	>> ')
-	// }, [])
-
 	return (
 		<div>
 			<h1>Main Layout</h1>
