@@ -1,34 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+NextJS
 
-## Getting Started
+Navigate
+Client side routes: di chuyển các trang k load ( không full page reload) 
 
-First, run the development server:
+--------------------------------------------------
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+SSG SSR CSR & ISR (Data Fetching)
+Pre-rendering: (có 2 cách SSG, SSR) render sẳn file html phía server sau đó load js (quá trình Hydration).
+SSG: Static Site Generation (user gửi reques -> server trả về file đc tạo sẳn lúc build gửi lại -> user. Hoạt động lúc build-time lúc mình gõ lệnh yarn build, build data sao thì data v thay đổi data sẽ k cập nhật, nên dùng khi data k cập nhật sau build).
+SSR: Server Side Rendering (user gửi reques -> server gom data rồi tạo file html -> user trình duyệt vẩn âm thầm tải js và thực thi khi hoàn tất . Each reques : lấy dữ liệu mỗi lần request, load từ đầu nếu chỉ có 1 thay đổi nhỏ trong nội dung, tốt cho SEO).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+CSR: Client Side Rendering (user gửi request -> đợi client load html js về nào mọi thứ load xong thì hiển thị  VD: reactjs, vuejs,... K tốt cho SEO) có thể kết hợp với SSG trường hợp k cần phải render phía server, SEO, prirate web.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+ISR: Incremental Static Rengeneration (build sẳn ra 10 file SSG - user request server trả về -> file html đã build, trường hợp reques ngoài 10 file đã build sẳn thì sẽ gửi reques -> server -> trả về html mới mất 1 ít thời gian nhưng sau k bị nữa, tái sử dụng ). 
+revalidate: 5
+- khi mình build -> generate ra 1 page, page này sẽ validate trong 5s khi qua 5s thì sẽ trả về data cũ nhưng phía dưới nó âm thầm gọi data mới, request -> sẽ hiển thị data mới 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+getStaticProps (Không chạy chung getServerSideProps)
+Static HTML Generation : N/A,
+Static HTML + JSON Data : getStaticProps,
+Static HTML + JSON Data + Dynamic Routes : getStaticProps + getStaticPaths
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+getStaticPaths  (Không chạy chung getServerSideProps)
+fallback: blocking (ưa thích) : request ->1 page mà chưa có trong cache -> gọi getStaticProps để generate 1 file html -> client. Các request sau đó đc trả về từ cache, nhược điểm là hàm getStaticProsp (fetch api) chạy càng lâu thì TTFB (Time To Fist By) càng lâu.
+fallback: true : request -> 1 page mà chưa có trong cache thì nó sẽ trả về ngay lập tức 1 cái gì đó ví dụ như mình làm loading, trong khi loading nó update state sau đó mình lấy data để render
 
-## Learn More
+--------------------------------------------------
 
-To learn more about Next.js, take a look at the following resources:
+getServerSideProps (Không chạy chung với getStaticPaths  & getStaticProps )
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+SSR with cache (cẩn thận trong trường hợp cache promo cho từng user nên dùng fetching tại client)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+ Using s-maxage=5: 
+- user (nhiều user gửi cùng lúc) gửi request (call getServerSideProps() and cache in CDN trong 5s). trong 5s đó Server trả về data đã cache (user gửi lên server trả về trong 5s đó). Sau 5s đó user gửi lại resques -> server lại cache in CDN trong 5s tiếp ... 
+- nếu thay đổi data trong 5s cache đó thì server trả về vẫn data cũ, sau 5s đó user gửi request lại thì mới cập nhật lại data mới
+Using s-maxage=5 & stale-while-revalidate : 
+- user gửi request -> server (cache in CDN) trong 5s. Trong 5s đó user gửi request -> server trả data về. Sau 5s user gửi lại request -> server vẫn trả về data cũ nhưng nếu data là data mới cập nhật thì server sẽ âm thầm load dữ liệu mới rồi lại cache vào CDN, user lại bấm load thì data mới đc đổ vào view.
+Using s-maxage=5 & stale-while-revalidate=5
+- user gửi request -> server (cache in CDN) trong 5s. Trong 5s đó user gửi request -> server trả data về. Sau 5s đó user gửi lại request thì sẽ chạy 5s tiếp theo của (stale-while-revalidate=5)  -> server vẫn trả data đã cache về vẫn âm thầm gọi data mới. Sau 10s user gửi lại request thì lại chạy lại hàm (call getServerSideProps() and cache in CDN trong 5s)  -> trả về view data mới, rồi sau đó lại tiếp tục chạy 5s của (stale-while-revalidate),...
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-------------------------------------------------
+Public pages with no data: SSG
+Public oages with data and can be updated from CMS: ISR
+Private pages: SSG + CSR
+-------------------------------------------------
