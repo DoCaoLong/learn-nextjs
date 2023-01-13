@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { Box } from '@mui/material'
 import { AdminLayout, MainLayout } from '@/components/layout'
+import { Typography } from '@mui/material'
 // import Header from '@/components/common/header'
 export interface IAboutPageProps {}
 // ssr: false (render phía client k render phía server, Ngược lại thì k dùng là true)
@@ -47,8 +49,10 @@ export default function AboutPage(props: IAboutPageProps) {
 	}, [page])
 
 	return (
-		<>
-			<div>About Page</div>
+		<Box>
+			<Typography component="h1" variant="h3" color="primary.main">
+				About Page
+			</Typography>
 			<Header />
 			<ul className="post-list">
 				{postList.map((item: any, index: number) => (
@@ -57,7 +61,7 @@ export default function AboutPage(props: IAboutPageProps) {
 			</ul>
 			<button onClick={() => handleBackClick()}>Back Page</button>
 			<button onClick={() => handleNextClick()}>Next Page</button>
-		</>
+		</Box>
 	)
 }
 

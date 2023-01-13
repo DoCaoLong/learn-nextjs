@@ -27,15 +27,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 			// get data
 			proxyRes.on('data', function (chunk) {
 				body += chunk
-				console.log('chunk :>> ', chunk)
+				// console.log('chunk :>> ', chunk)
 			})
 			// đã get xong
 			proxyRes.on('end', function () {
 				try {
 					const a = JSON.parse(body)
-					console.log('a :>> ', a)
+					// console.log('a :>> ', a)
 					const { accessToken, expiredAt } = JSON.parse(body)
-					console.log({ accessToken, expiredAt })
+					// console.log({ accessToken, expiredAt })
 					// console.log('res from proxid server:', body)
 
 					// convert token to cookies (chỉ hoạt động ở env production)
